@@ -132,7 +132,7 @@
                 <input id="videoInput" type="file" accept="video/*" />
                 <span class="file-ui">
                   <span class="file-title">Upload Video Clip</span>
-                  <span class="file-sub">MP4 / MOV / WEBM</span>
+                  <span class="file-sub">MP4 / WEBM works best</span>
                 </span>
               </label>
             </div>
@@ -142,7 +142,7 @@
             <div class="panel-title">2) If video: capture a frame</div>
             <div class="video-tools">
               <button id="captureBtn" class="btn" disabled>Capture current frame</button>
-              <div class="tiny">Tip: Use the video controls to pause on the perfect frame.</div>
+              <div class="tiny" id="videoStatus">Upload a video to enable capture.</div>
             </div>
 
             <video id="video" class="video" controls playsinline></video>
@@ -191,9 +191,7 @@
           </div>
 
           <div id="resultsGrid" class="results-grid">
-            <div class="empty">
-              Upload and select an item to see results.
-            </div>
+            <div class="empty">Upload and select an item to see results.</div>
           </div>
         </div>
       </div>
@@ -203,51 +201,43 @@
       <div class="container">
         <div class="section-head">
           <h2>How to make it real (backend plan)</h2>
-          <p>This is the cleanest way to support Amazon + eBay + Alibaba-style sources.</p>
+          <p>Best approach to support Amazon + eBay + Alibaba-style sources.</p>
         </div>
 
         <div class="api-cards">
           <div class="api-card">
             <h3>Vision step</h3>
-            <p>
-              Crop the selected box and run image similarity:
-              embeddings (CLIP-like), object detection, or visual search.
-            </p>
+            <p>Crop the selection and run visual similarity (embeddings / detection).</p>
             <ul>
               <li>Input: cropped image</li>
-              <li>Output: keywords + category + embedding vector</li>
+              <li>Output: keywords + category + match vector</li>
             </ul>
           </div>
 
           <div class="api-card">
             <h3>Marketplace step</h3>
-            <p>
-              Query marketplaces via official APIs (preferred) or partner programs.
-              Avoid scraping to stay compliant.
-            </p>
+            <p>Query marketplaces via official APIs (avoid scraping).</p>
             <ul>
               <li>eBay Browse API</li>
               <li>Amazon Product Advertising API</li>
-              <li>Alibaba / AliExpress partner APIs (varies)</li>
+              <li>AliExpress/Alibaba partner APIs (varies)</li>
             </ul>
           </div>
 
           <div class="api-card">
             <h3>Ranking step</h3>
-            <p>
-              Merge results, normalize shipping/fees, compute “match score,” then sort.
-            </p>
+            <p>Merge results, normalize shipping, compute match score, sort.</p>
             <ul>
               <li>Best match</li>
-              <li>Lowest total price</li>
-              <li>Fastest delivery</li>
+              <li>Lowest total</li>
+              <li>Highest rating</li>
             </ul>
           </div>
         </div>
 
         <div class="callout">
-          <strong>Next upgrade:</strong> Add a backend endpoint like <code>/api/search</code> that receives:
-          <code>{ cropImageBase64, selection, marketplacePrefs }</code> and returns real listings.
+          <strong>Next upgrade:</strong> Add endpoint <code>/api/search</code> that receives:
+          <code>{ cropImageBase64, selection }</code> and returns real listings.
         </div>
       </div>
     </section>
