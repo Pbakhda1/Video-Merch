@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Video Merch — Find products from screenshots & clips</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">VM</div>
+        <div class="brand-text">
+          <div class="brand-name">Video Merch</div>
+          <div class="brand-tag">Find Everything you want with a screenshot or movie clip</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#how">How it works</a>
+        <a href="#try">Try it</a>
+        <a href="#api">API plan</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1>Turn any scene into a shopping search.</h1>
+          <p class="subhead">
+            Upload a screenshot or a video clip, select the item (like a toaster),
+            then compare listings across marketplaces.
+          </p>
+
+          <div class="cta-row">
+            <a class="btn primary" href="#try">Try the demo</a>
+            <a class="btn ghost" href="#api">Connect real marketplaces</a>
+          </div>
+
+          <div class="creator">
+            Created by <strong>Parth Pankaj Bakhda</strong>
+          </div>
+
+          <div class="trust">
+            <div class="pill">✅ Clean UI</div>
+            <div class="pill">✅ Item selection (box draw)</div>
+            <div class="pill">✅ Video frame capture</div>
+            <div class="pill">✅ Ready for APIs</div>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="card-title">What this demo does</div>
+          <ul class="checklist">
+            <li>Upload image or video</li>
+            <li>Pick a frame (video)</li>
+            <li>Draw a selection box</li>
+            <li>Shows demo “best prices”</li>
+          </ul>
+          <div class="note">
+            <strong>Note:</strong> Real product matching uses vision + marketplace APIs.
+            This starter site is designed to plug into a backend later.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>How it works</h2>
+          <p>Simple flow your users understand instantly.</p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h3>Upload</h3>
+              <p>Add a screenshot or a short clip from a movie/video.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h3>Select the item</h3>
+              <p>Draw a box around the toaster (or any object you want).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h3>Search marketplaces</h3>
+              <p>Backend uses vision + APIs to find exact/similar matches and prices.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h3>Pick the best deal</h3>
+              <p>Sort by price, shipping, rating, or “closest match”.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="try" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Try the demo</h2>
+          <p>Upload a file, capture a frame if needed, then drag a box to “choose the product”.</p>
+        </div>
+
+        <div class="workspace">
+          <div class="panel">
+            <div class="panel-title">1) Upload screenshot or video</div>
+
+            <div class="upload-grid">
+              <label class="file">
+                <input id="imageInput" type="file" accept="image/*" />
+                <span class="file-ui">
+                  <span class="file-title">Upload Screenshot</span>
+                  <span class="file-sub">PNG / JPG / WEBP</span>
+                </span>
+              </label>
+
+              <label class="file">
+                <input id="videoInput" type="file" accept="video/*" />
+                <span class="file-ui">
+                  <span class="file-title">Upload Video Clip</span>
+                  <span class="file-sub">MP4 / MOV / WEBM</span>
+                </span>
+              </label>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="panel-title">2) If video: capture a frame</div>
+            <div class="video-tools">
+              <button id="captureBtn" class="btn" disabled>Capture current frame</button>
+              <div class="tiny">Tip: Use the video controls to pause on the perfect frame.</div>
+            </div>
+
+            <video id="video" class="video" controls playsinline></video>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">3) Select the item (draw a box)</div>
+
+            <div class="canvas-wrap">
+              <canvas id="canvas"></canvas>
+              <div class="canvas-hint" id="canvasHint">
+                Upload an image or capture a video frame to begin.
+              </div>
+            </div>
+
+            <div class="controls">
+              <div class="control-row">
+                <button id="clearSelectionBtn" class="btn" disabled>Clear selection</button>
+                <button id="searchBtn" class="btn primary" disabled>Search lowest price</button>
+              </div>
+
+              <div class="selection-readout" id="selectionReadout">
+                Selection: <span class="muted">none</span>
+              </div>
+
+              <div class="fineprint">
+                Demo mode: results are mocked. When you’re ready, connect a backend to real APIs.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="results">
+          <div class="results-head">
+            <h3>Results</h3>
+            <div class="filters">
+              <label class="select">
+                Sort:
+                <select id="sortSelect" disabled>
+                  <option value="price">Lowest price</option>
+                  <option value="match">Best match</option>
+                  <option value="rating">Highest rating</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div id="resultsGrid" class="results-grid">
+            <div class="empty">
+              Upload and select an item to see results.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="api" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>How to make it real (backend plan)</h2>
+          <p>This is the cleanest way to support Amazon + eBay + Alibaba-style sources.</p>
+        </div>
+
+        <div class="api-cards">
+          <div class="api-card">
+            <h3>Vision step</h3>
+            <p>
+              Crop the selected box and run image similarity:
+              embeddings (CLIP-like), object detection, or visual search.
+            </p>
+            <ul>
+              <li>Input: cropped image</li>
+              <li>Output: keywords + category + embedding vector</li>
+            </ul>
+          </div>
+
+          <div class="api-card">
+            <h3>Marketplace step</h3>
+            <p>
+              Query marketplaces via official APIs (preferred) or partner programs.
+              Avoid scraping to stay compliant.
+            </p>
+            <ul>
+              <li>eBay Browse API</li>
+              <li>Amazon Product Advertising API</li>
+              <li>Alibaba / AliExpress partner APIs (varies)</li>
+            </ul>
+          </div>
+
+          <div class="api-card">
+            <h3>Ranking step</h3>
+            <p>
+              Merge results, normalize shipping/fees, compute “match score,” then sort.
+            </p>
+            <ul>
+              <li>Best match</li>
+              <li>Lowest total price</li>
+              <li>Fastest delivery</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>Next upgrade:</strong> Add a backend endpoint like <code>/api/search</code> that receives:
+          <code>{ cropImageBase64, selection, marketplacePrefs }</code> and returns real listings.
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div>
+          <div class="footer-brand">Video Merch</div>
+          <div class="footer-sub">Created by Parth Pankaj Bakhda</div>
+        </div>
+        <div class="footer-links">
+          <a href="#how">How it works</a>
+          <a href="#try">Try it</a>
+          <a href="#api">API plan</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
